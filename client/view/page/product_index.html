@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,16 +12,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" type="image/png" href="../../assets/webElements/logo.png">
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/index.js" async></script>
+    <link rel="icon" type="image/png" href="assets/webElements/logo.png">
+    <link rel="stylesheet" href="view/css/style.css">
+    <script src="view/js/index.js" async></script>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light  shadow-sm">
         <div class="container">
             <a  href="#">
-                <img src="../../assets/webElements/logo.png" alt="RebShop Logo" style="height: 45px;">  <a class="navbar-brand" href="#">REBSHOP</a>
+                <img src="assets/webElements/logo.png" alt="RebShop Logo" style="height: 45px;">  <a class="navbar-brand" href="#">REBSHOP</a>
             </a>
           
             <div class="hamburger" id="hamburger">
@@ -28,10 +30,10 @@
                 <div></div>
             </div>
             <div class="collapse navbar-collapse" id="navbarNav">
-                    <form class="d-flex w-75">
+                    <form class="d-flex w-75" id="searchForm">
                         <div class="input-group">
-                            <input class="form-control" type="search" placeholder="Search products" aria-label="Search">
-                            <button class="btn btn-primary" type="submit">Search</button>
+                            <input class="form-control" type="search" id="searchInput" placeholder="Search products" aria-label="Search">
+                            <button class="btn btn-primary" id="searchButton" type="submit">Search</button>
                             <button class="btn btn-secondary" id="cameraSearch" type="button">
                                 <i class="fas fa-camera"></i>
                             </button>
@@ -75,7 +77,9 @@
                         <div class="card-header text-white"  style="background-color: #e9e752;">
                             <h5 class="mb-0">Your Cart</h5>
                         </div>
-                        <div class="table-responsive">
+                        <div id="cartContainer" class="table-responsive">
+
+                        <?php  if (!empty($cartItems)): ?>
                             <table class="table table-hover align-middle mb-0">
                                 <thead class="table-light">
                                     <tr>
@@ -88,23 +92,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                <?php foreach ($cartItems as $item): ?> 
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <img src="../../assets/products/bleu-shoe.jpg" alt="Product" class="img-thumbnail me-3">
+                                                <img src="assets/products/bleu-shoe.jpg" alt="Product" class="img-thumbnail me-3">
                                                
                                             </div>
                                         </td>
-                                        <td>bleu-shoe</td>
-                                        <td>1200 XAF</td>
+                                        <td><?php echo ($item['name']); ?></td>
+                                        <td><?php echo ($item['name']); ?></td>
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <button class="btn btn-sm btn-outline-secondary px-2">-</button>
-                                                <input type="number" class="form-control form-control-sm text-center mx-2" value="1" min="1" style="width: 60px;">
+                                                <input type="number" class="form-control form-control-sm text-center mx-2" value="1" min="1" style="width: 60px;"><?php echo ($item['quantity']); ?>
                                                 <button class="btn btn-sm btn-outline-secondary px-2">+</button>
                                             </div>
                                         </td>
-                                        <td>1200 XAF</td>
+                                        <td><?php echo ($item['quantity'] * $item['price']); ?></td>
                                         <td>
                                             <button class="btn btn-sm btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
@@ -112,64 +118,19 @@
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <img src="../../assets/products/otantik-car.jpg" alt="Product" class="img-thumbnail me-3">
-                                                
-                                            </div>
-                                        </td>
-                                        <td>Otantik car</td>
-                                        <td>9,900000 XAF</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <button class="btn btn-sm btn-outline-secondary px-2">-</button>
-                                                <input type="number" class="form-control form-control-sm text-center mx-2" value="1" min="1" style="width: 60px;">
-                                                <button class="btn btn-sm btn-outline-secondary px-2">+</button>
-                                            </div>
-                                        </td>
-                                        <td>1200 XAF</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
+
+                            <?php else: ?>
+            <p>Your cart is empty.</p>
+        <?php endif; ?>
                         </div>
                     </div>
                 </div>
 
                 <!-- Cart Summary -->
-                <div class="col-12 mt-4">
-                    <div class="card shadow-sm" >
-                        <div class="card-header  text-white" style="background-color: #e9e752;">
-                            <h5 class="mb-0">Order Summary</h5>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Subtotal</span>
-                                    <span>12000 XAF</span>
-                                </li>
-
-                                <li class="list-group-item d-flex justify-content-between">
-                                    <span>Qty</span>
-                                    <span>2</span>
-                                </li>
-                              
-                                <li class="list-group-item d-flex justify-content-between fw-bold">
-                                    <span>Total</span>
-                                    <span>13200 XAF</span>
-                                </li>
-                            </ul>
-                            <button class="btn btn-primary w-100 mt-3">Proceed to Checkout</button>
-                            <button class="btn btn-outline-secondary w-100 mt-2" id="exit">Continue Shopping</button>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -188,7 +149,7 @@
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="../../assets/webElements/banner3.png" class="d-block w-100" alt="Slide 1">
+            <img src="assets/webElements/banner3.png" class="d-block w-100" alt="Slide 1">
             <div class="carousel-caption">
                 <h5>Exclusive Offer!</h5>
                 <p>Get 30% off on all electronics. Limited time only!</p>
@@ -196,7 +157,7 @@
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../../assets/webElements/banner2.png" class="d-block w-100" alt="Slide 2">
+            <img src="assets/webElements/banner2.png" class="d-block w-100" alt="Slide 2">
             <div class="carousel-caption">
                 <h5>Summer Sale!</h5>
                 <p>Up to 50% off on selected items. Don’t miss out!</p>
@@ -204,7 +165,7 @@
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../../assets/webElements/banner1.png" class="d-block w-100" alt="Slide 3">
+            <img src="assets/webElements/banner1.png" class="d-block w-100" alt="Slide 3">
             <div class="carousel-caption">
                 <h5>New Arrivals!</h5>
                 <p>Check out our latest products and trends.</p>
@@ -235,51 +196,56 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="category" class="form-label">Category</label>
-                    <select class="form-select" id="category">
-                        <option selected>All</option>
-                        <option>Electronics</option>
-                        <option>Clothing</option>
-                        <option>Accessories</option>
-                    </select>
-                </div>
+            <label for="category" class="form-label">Category</label>
+            <select class="form-select" id="category">
+                <option value=""  selected>All</option>
+                <option>Electronics</option>
+                <option>Clothing</option>
+                <option>Accessories</option>
+            </select>
+        </div>
 
-                <div class="mb-3">
-                    <label for="category" class="form-label">Type</label>
-                    <select class="form-select" id="category">
-                        <option selected>All</option>
-                        <option>Asus</option>
-                        <option>Dell</option>
-                        <option>HP</option>
-                    </select>
-                </div>
+        <div class="mb-3">
+            <label for="type" class="form-label">Type</label>
+            <select class="form-select" id="type">
+                <option  value=""  selected>All</option>
+                <option>Asus</option>
+                <option>Dell</option>
+                <option>HP</option>
+            </select>
+        </div>
 
-                <div class="mb-3">
-                    <label for="color" class="form-label">Color</label>
-                    <select class="form-select" id="color">
-                        <option selected>All</option>
-                        <option>Red</option>
-                        <option>Blue</option>
-                        <option>Black</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary w-100">Apply Filters</button>
-            </aside>
+        <div class="mb-3">
+            <label for="color" class="form-label">Color</label>
+            <select class="form-select" id="color">
+                <option value=""  selected>All</option>
+                <option>Red</option>
+                <option>Blue</option>
+                <option>Black</option>
+            </select>
+        </div>
+        <button class="btn btn-primary w-100" id="applyFilters">Apply Filters</button>
+    </aside>    
 
             <!-- Product Listing -->
             
 
             <main class="col-md-9">
-                <div class="row">
+                <div id="productContainer" class="row">
                     <h5 class="product-list">RebShop's Products</h5> 
+
+
+                    <?php if (!empty($products)): ?>
+                        <?php foreach ($products as $product): ?>
+
                     <div class="col-sm-6 col-md-4 mb-4">
                         <div class="card product-card">
-                            <img src="../../assets/products/watch-black.jpg" class="card-img-top" alt="Product Image">
+                            <img src="assets/products/<?php echo $product['image']?>" class="card-img-top" alt="Product Image">
                             <div class="card-body">
-                                <h5 class="card-title">White Watch</h5>
-                                <p class="card-text">Type: Electronics</p>
-                                <p class="card-text">Category: Gadgets</p>
-                                <p class="card-text">Price: <i style="font-weight: 800;"> 1500 XAF</p></i>
+                                <h5 class="card-title"><?php echo $product['name']?></h5>
+                                <p class="card-text">Type: <?php echo $product['type']?></p>
+                                <p class="card-text">Category: <?php echo  $product['category']?></p>
+                                <p class="card-text">Price: <i style="font-weight: 800;"> <?php echo $product['price']?> XAF</p></i>
                                 <p class="card-text">
                                     Rating: <i class="fas fa-star text-warning"></i>
                                     <i class="fas fa-star text-warning"></i>
@@ -287,105 +253,22 @@
                                     <i class="fas fa-star-half-alt text-warning"></i>
                                     <i class="far fa-star"></i>
                                 </p>
-                                <button class="btn btn-primary w-100">Add to Cart</button>
+                                <button class="btn btn-primary w-100 add-to-cart" 
+        data-product-id="<?php echo $product['id']; ?>" 
+        data-product-name="<?php echo $product['name']; ?>" 
+        data-product-price="<?php echo $product['price']; ?>" 
+        data-product-quantity="1">Add to Cart</button>
+
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-4 mb-4">
-                        <div class="card product-card">
-                            <img src="../../assets/products/watch-orange.jpg" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Orange Watch</h5>
-                                <p class="card-text">Type: Electronics</p>
-                                <p class="card-text">Category: Gadgets</p>
-                                <p class="card-text">Price:<i style="font-weight: 800;"> 1500 XAF</p></i>
-                                <p class="card-text">
-                                    Rating: <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star"></i>
-                                </p>
-                                <button class="btn btn-primary w-100">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 mb-4">
-                        <div class="card product-card">
-                            <img src="../../assets/products/bleu-shoe.jpg" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Sport Shoe</h5>
-                                <p class="card-text">Type: Nike</p>
-                                <p class="card-text">Category: Dressing</p>
-                                <p class="card-text">Price:<i style="font-weight: 800;"> 2000 XAF</p></i>
-                                <p class="card-text">
-                                    Rating: <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </p>
-                                <button class="btn btn-primary w-100">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 mb-4">
-                        <div class="card product-card">
-                            <img src="../../assets/products/otantik-car.jpg" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Otantik Car</h5>
-                                <p class="card-text">Type: Vehicle</p>
-                                <p class="card-text">Category: Hyundai</p>
-                                <p class="card-text"> Price:<i style="font-weight: 800;"> 9,900000 XAF</i></p>
-                                <p class="card-text">
-                                    Rating: <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star-half-alt text-warning"></i>
-                                    <i class="far fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </p>
-                                <button class="btn btn-primary w-100">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 mb-4">
-                        <div class="card product-card">
-                            <img src="../../assets/products/watch-pink.jpg" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Black Watch</h5>
-                                <p class="card-text">Type: Electronics</p>
-                                <p class="card-text">Category: Gadgets</p>
-                                <p class="card-text">Price:<i style="font-weight: 800;"> 1800 XAF</p></i>
-                                <p class="card-text">
-                                    Rating: <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star-half-alt text-warning"></i>
-                                    <i class="far fa-star"></i>
-                                </p>
-                                <button class="btn btn-primary w-100">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4 mb-4">
-                        <div class="card product-card">
-                            <img src="../../assets/products/jordan-shoe.jpg" class="card-img-top" alt="Product Image">
-                            <div class="card-body">
-                                <h5 class="card-title">Pink Watch</h5>
-                                <p class="card-text">Type: Electronics</p>
-                                <p class="card-text">Category: Gadgets</p>
-                                <p class="card-text">Price:<i style="font-weight: 800;"> 2500 XAF</p></i>
-                                <p class="card-text">
-                                    Rating: <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="fas fa-star text-warning"></i>
-                                    <i class="far fa-star"></i>
-                                </p>
-                                <button class="btn btn-primary w-100">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
+
+
+                    <?php endforeach; ?>
+        <?php else: ?>
+            <p>No products found.</p>
+        <?php endif; ?>
+                    
                 </div>
             </main>
         </div>
